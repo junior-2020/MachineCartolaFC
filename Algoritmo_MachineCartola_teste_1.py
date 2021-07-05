@@ -1,7 +1,7 @@
-from pydfs_lineup_optimizer import Site, Sport, get_optimizer
+import pandas as pd
+import numpy as np
+import random as rd
+import matplotlib.pyplot as plt
 
-
-optimizer = get_optimizer(Site.YAHOO, Sport.BASKETBALL)
-optimizer.load_players_from_csv("yahoo-NBA.csv")
-for lineup in optimizer.optimize(10):
-    print(lineup)
+dados = pd.read_csv('clustering.csv')
+dados.head()
