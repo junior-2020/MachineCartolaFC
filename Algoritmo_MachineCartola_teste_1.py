@@ -3,16 +3,16 @@ import numpy as np
 import random as rd
 import matplotlib.pyplot as plt
 
-from locale import atof, setlocale, LC_NUMERIC
 
-setlocale(LC_NUMERIC, '')
 
 ########################################################################################################################################################################
 '''
 Aquisição dos dados e visualização dos gráficos da base de dados que será utilizada
 '''
 ########################################################################################################################################################################
+from locale import atof, setlocale, LC_NUMERIC
 
+setlocale(LC_NUMERIC, '')
 f = lambda x: atof(x)
 
 
@@ -43,21 +43,27 @@ plt.xlabel('Tipo de Scout')
 plt.ylabel('Quantidade do scout')
 plt.show()
 
-dados_eixo_x_atleta = dados[[pontuacaoAtleta, precoAtleta, partidasJogadas]]
+dados_eixo_x_atleta = dados[[pontuacaoAtleta, precoAtleta, partidasJogadas, mediaAtleta, posicaoId]]
 print(dados_eixo_x_atleta)
 
 plt.scatter(dados_eixo_x_atleta[partidasJogadas], dados_eixo_x_atleta[pontuacaoAtleta], c='black')
+plt.scatter(dados_eixo_x_atleta[partidasJogadas], dados_eixo_x_atleta[mediaAtleta], c='red')
 plt.xlabel('Partidas jogadas')
-plt.ylabel('Pontuação do atleta')
+plt.ylabel('Pontuação do atleta(b) / Media(r)')
 plt.show()
 
 
-dados_eixo_x_atleta = dados[[mediaAtleta, posicaoId]]
+# dados_eixo_x_atleta = dados[[mediaAtleta, posicaoId]]
 print(dados_eixo_x_atleta)
 
 plt.scatter(dados_eixo_x_atleta[posicaoId], dados_eixo_x_atleta[mediaAtleta], c='black')
 plt.xlabel('Posição em campo')
 plt.ylabel('Média do atleta')
+plt.show()
+
+plt.scatter(dados_eixo_x_atleta[mediaAtleta], dados_eixo_x_atleta[pontuacaoAtleta], c='black')
+plt.xlabel('Média do atleta')
+plt.ylabel('Pontuação do atleta')
 plt.show()
 
 '''
