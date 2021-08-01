@@ -87,6 +87,14 @@ plt.show()
 #     if linha[scoutId] == 'PI':
 #         print(dados_eixo_x_atleta.at[index, mediaAtleta])
         
+
+########################################################################################################################################################################
+'''
+Aplicação do algoritmo de clustering para classificar e agrupar os dados
+'''
+########################################################################################################################################################################
+
+
 clusters_atletas = clustering_script.Clusters(dados)
 # print(clusters_atletas.dados)
 clusters_atletas.formar_clusters()
@@ -97,3 +105,4 @@ for i in dados_eixo_x_atleta:
     if dados_eixo_x_atleta[dados_eixo_x_atleta[rodadaId] == 13]:
         contador += 1
         print(contador)
+
