@@ -1,9 +1,10 @@
+from cycler import cycler
 import pandas as pd
 import numpy as np
 import random as rd
 import matplotlib.pyplot as plt
 import clustering_script
-
+import modelo
 
 ########################################################################################################################################################################
 '''
@@ -16,12 +17,14 @@ Aquisição dos dados e visualização dos gráficos da base de dados que será 
 # f = lambda x: atof(x)
 
 
-dados = pd.read_csv('atletaspontuacao.csv', sep=',', converters={'Id':int, 'Atleta_id':int, 'Rodada_id': int})
-#, 'Pontos':f, 'Preço':f, 'Variação':f, 'Média':f })
+dados = pd.read_csv('atletaspontuacao.csv', sep=',', converters={
+                    'Id': int, 'Atleta_id': int, 'Rodada_id': int})
+# , 'Pontos':f, 'Preço':f, 'Variação':f, 'Média':f })
 
 print("Imprimindo as primeiras entradas dos dados: \n", dados.head())
 
-print("Fazendo a descrição estatística dos dados: \n", dados.describe(include='float64'))
+print("Fazendo a descrição estatística dos dados: \n",
+      dados.describe(include='float64'))
 
 
 pontuacaoAtleta = 'Pontos'
@@ -39,7 +42,8 @@ rodadaId = 'Rodada_id'
 
 # Fazendo os gráficos para visualização
 
-dados_eixo_x_atleta = dados[[atletaId, pontuacaoAtleta, precoAtleta, mediaAtleta, rodadaId]]
+dados_eixo_x_atleta = dados[[
+    atletaId, pontuacaoAtleta, precoAtleta, mediaAtleta, rodadaId]]
 print("Imprimindo os dados selecionados: \n", dados_eixo_x_atleta)
 
 # plt.scatter(dados_eixo_x_atleta[rodadaId], dados_eixo_x_atleta[pontuacaoAtleta], c='black')
@@ -49,24 +53,24 @@ print("Imprimindo os dados selecionados: \n", dados_eixo_x_atleta)
 # plt.show()
 
 
-plt.scatter(dados_eixo_x_atleta[precoAtleta], dados_eixo_x_atleta[mediaAtleta], c='black')
+plt.scatter(dados_eixo_x_atleta[precoAtleta],
+            dados_eixo_x_atleta[mediaAtleta], c='black')
 plt.xlabel('Preço do atleta')
 plt.ylabel('Média do atleta')
-plt.show() # Bom gráfico!
+plt.show()  # Bom gráfico!
 
 
-plt.scatter(dados_eixo_x_atleta[mediaAtleta], dados_eixo_x_atleta[pontuacaoAtleta], c='black')
+plt.scatter(dados_eixo_x_atleta[mediaAtleta],
+            dados_eixo_x_atleta[pontuacaoAtleta], c='black')
 plt.xlabel('Média do atleta')
 plt.ylabel('Pontuação do atleta')
-plt.show() # Bom gráfico!
+plt.show()  # Bom gráfico!
 
 # atletas_unicos = dados_eixo_x_atleta.groupby(atletaId)
 # cor = (rd.random(), rd.random(), rd.random())
 # print(atletas_unicos.shape)
 ids_passadas = []
 
-
-from cycler import cycler
 
 plt.rc('axes', prop_cycle=(cycler('color', ['r', 'g', 'b', 'y', 'c', 'k']) *
                            cycler('linestyle', ['-', '--', ':', '-.'])))
@@ -86,7 +90,7 @@ plt.show()
 # for index, linha in dados_eixo_x_scout.iterrows():
 #     if linha[scoutId] == 'PI':
 #         print(dados_eixo_x_atleta.at[index, mediaAtleta])
-        
+
 
 ########################################################################################################################################################################
 '''
@@ -99,10 +103,26 @@ clusters_atletas = clustering_script.Clusters(dados)
 # print(clusters_atletas.dados)
 clusters_atletas.formar_clusters()
 # clusters_atletas.plotar_clusters()
-contador = 0
 
-for i in dados_eixo_x_atleta:
-    if dados_eixo_x_atleta[dados_eixo_x_atleta[rodadaId] == 13]:
-        contador += 1
-        print(contador)
+# print(type(clusters_atletas))
+# print(clusters_atletas)
+########################################################################################################################################################################
+'''
+Aplicação do algoritmo de clustering para classificar e agrupar os dados
+'''
+########################################################################################################################################################################
 
+
+dados_teste = dados_eixo_x_atleta[dados_eixo_x_atleta[rodadaId] == 13]
+dados_treinamento = dados_eixo_x_atleta[dados_eixo_x_atleta[rodadaId] != 13]
+
+# print(dados_treinamento)
+print(type(dados_treinamento))
+
+# passar os dados sem a coluna de atleta_id
+# talvez dentro de um for
+# e ver como recuperar os resultados incorporando na tabela com os ids
+rede_neural = modelo.LSTM()
+resultado = rede_neural(dados_treinamento)
+
+print(resultado)

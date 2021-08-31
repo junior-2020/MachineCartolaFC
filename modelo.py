@@ -16,6 +16,9 @@ class LSTM(torch.nn.Module):
                                   )
 
     def forward(self, input_seq):
+        # if type(input_seq) == "<class 'pandas.core.frame.DataFrame'>":
+        input_seq = torch.tensor(input_seq.values)
+        print(input_seq)
         lstm_output, self.neuronios_ocultos = self.lstm(
             input_seq.view(len(input_seq), 1, -1), self.neuronios_ocultos)
         predicoes = self.linear(lstm_output.view(len(input_seq), -1))
